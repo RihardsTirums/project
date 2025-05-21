@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\CategoryResource;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -26,5 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy']);
     Route::get('user', function (Request $request) {
         return $request->user();
+    });
+    Route::get('categories', function (Request $request) {
+        return CategoryResource::collection(Category::all());
     });
 });
