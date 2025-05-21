@@ -5,11 +5,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+/*
+|--------------------------------------------------------------------------
+| Guest-only routes
+|--------------------------------------------------------------------------
+| These two can only be hit by guests (not yet authenticated)
+*/
+Route::middleware('guest')->group(function () {
+    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('login',    [AuthenticatedSessionController::class, 'store']);
 });
 
-Route::post('register', [RegisteredUserController::class, 'store']);
-Route::post('login',    [AuthenticatedSessionController::class, 'store']);
-Route::post('logout',   [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
-
+/*
+|--------------------------------------------------------------------------
+| Authenticated routes
+|--------------------------------------------------------------------------
+| These require a valid Sanctum session
+*/
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy']);
+    Route::get('user', function (Request $request) {
+        return $request->user();
+    });
+});
