@@ -27,13 +27,14 @@ class DatabaseSeeder extends Seeder
             Post::factory(rand(1,20))
                 ->for($user, 'user')
                 ->create()
-                ->each(function($post) {
+                ->each(function($post) use ($user) {
                     $post->categories()->attach(
                         \App\Models\Category::inRandomOrder()->take(rand(1,8))->pluck('id')
                     );
 
                     Comment::factory(rand(0,150))
                         ->for($post, 'post')
+                        ->for($user, 'user')
                         ->create();
                 });
         });

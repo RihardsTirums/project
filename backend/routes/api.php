@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Resources\CategoryResource;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\ProfilePostController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -32,7 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function (Request $request) {
         return $request->user();
     });
-    Route::get('categories',fn() => CategoryResource::collection(Category::all()));
+    Route::get('categories', fn() => CategoryResource::collection(Category::all()));
     Route::apiResource('posts', PostController::class);
     Route::apiResource('posts.comments', CommentController::class)->only(['store', 'destroy']);
+    Route::get('profile/{user}', ProfilePostController::class);
 });
