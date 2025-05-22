@@ -4,6 +4,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\CategoryResource;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -32,4 +33,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('categories', function (Request $request) {
         return CategoryResource::collection(Category::all());
     });
+    Route::apiResource('posts', PostController::class);
 });
