@@ -84,8 +84,12 @@ class PostController extends Controller
      */
     public function show(Post $post): PostResource
     {
-        $post->load(['user', 'categories'])
-            ->loadCount('comments');
+        $post->load([
+            'user',
+            'categories',
+            'comments.user',
+        ])
+        ->loadCount('comments');
 
         return new PostResource($post);
     }

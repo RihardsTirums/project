@@ -41,10 +41,12 @@ class Post extends Model
     }
 
     /**
-     * Comments written on this post.
+     * Comments written on this post, sorted newest-first, each with its author loaded.
      */
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)
+                    ->with('user')
+                    ->orderBy('created_at', 'desc');
     }
 }

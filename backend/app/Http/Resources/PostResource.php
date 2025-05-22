@@ -30,6 +30,9 @@ class PostResource extends JsonResource
                 ])
                 ->values(),
             'comments_count'  => $this->comments_count,
+            'comments'       => CommentResource::collection(
+                $this->whenLoaded('comments')
+            ),
         ];
     }
 }
