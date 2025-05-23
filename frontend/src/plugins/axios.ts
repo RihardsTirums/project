@@ -1,11 +1,16 @@
 import axiosLib from 'axios'
 import Cookies from 'js-cookie'
+import qs from 'qs'
 
 const axios = axiosLib.create({
     baseURL: import.meta.env.VITE_BACKEND_URL,
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
+    },
+    paramsSerializer: {
+        serialize: (params) =>
+            qs.stringify(params, { arrayFormat: 'comma', skipNulls: true, encode: false }),
     },
 })
 

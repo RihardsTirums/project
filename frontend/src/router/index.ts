@@ -3,6 +3,7 @@ import Welcome from '@/views/Welcome.vue'
 import Login from '@/views/auth/Login.vue'
 import Register from '@/views/auth/Register.vue'
 import Post from '@/views/post/Post.vue'
+import PostCard from '@/components/posts/PostCard.vue'
 import { useAuthStore } from '@/stores/auth'
 
 export const routes: RouteRecordRaw[] = [
@@ -29,6 +30,16 @@ export const routes: RouteRecordRaw[] = [
     name: 'posts',
     component: Post,
     meta: { auth: true }
+  },
+  {
+    path: '/posts/:id',
+    name: 'post.show',
+    component: PostCard,
+    props: route => ({
+      id: route.params.id,
+      expanded: true
+    }),
+    meta: { auth: true },
   },
   {
     path: '/:pathMatch(.*)*',
