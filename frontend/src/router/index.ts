@@ -36,7 +36,7 @@ export const routes: RouteRecordRaw[] = [
     name: 'post.show',
     component: PostCard,
     props: route => ({
-      id: route.params.id,
+      id: Number(route.params.id),
       expanded: true
     }),
     meta: { auth: true },
