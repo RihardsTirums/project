@@ -5,6 +5,7 @@ import { fetchPost } from '@/services/post';
 import type { Post, PostDetail } from '@/types/post';
 import CommentsSection from './CommentsSection.vue';
 import AuthorLink from '@/components/posts/AuthorLink.vue'
+import OwnerActions from '@/components/posts/OwnerActions.vue'
 
 const props = withDefaults(defineProps<{
     post?: Post;
@@ -35,12 +36,17 @@ const post = computed(() => local.value as Post);
             ? 'p-8 max-w-3xl mx-auto hover:shadow-xl hover:ring-2 hover:ring-indigo-300'
             : 'p-4 hover:shadow-xl hover:scale-105 duration-200 flex flex-col justify-between no-underline'">
 
-        <h1 :class="expanded ? 'text-3xl mb-4' : 'text-lg'" class="font-semibold text-gray-900">
-            {{ post.title }}
-        </h1>
+        <div class="flex items-center justify-between mb-2">
+            <h1 :class="expanded ? 'text-3xl' : 'text-lg'" class="font-semibold text-gray-900 truncate">
+                {{ post.title }}
+            </h1>
+            <OwnerActions :post="post" />
+        </div>
 
         <div class="flex items-center text-sm text-gray-500 space-x-2">
-            <span>By <i><AuthorLink :user="post.user" /></i></span>
+            <span>By <i>
+                    <AuthorLink :user="post.user" />
+                </i></span>
             <template v-if="expanded">
                 <span>|</span>
                 <time :datetime="post.created_at">{{ post.created_at }}</time>

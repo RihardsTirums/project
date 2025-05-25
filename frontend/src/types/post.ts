@@ -51,3 +51,9 @@ export interface PostFilters {
     per_page: number;
     page: number;
 }
+
+export interface PostPayload {
+    title: string
+    content: string
+    categories: number[]
+}

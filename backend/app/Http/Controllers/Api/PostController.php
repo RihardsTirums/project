@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostCollection;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -56,10 +56,10 @@ class PostController extends Controller
     /**
      * POST /api/posts
      *
-     * @param  PostRequest  $request
+     * @param  StorePostRequest  $request
      * @return PostResource
      */
-    public function store(PostRequest $request): PostResource
+    public function store(StorePostRequest $request): PostResource
     {
         $data = $request->validated();
 
@@ -97,11 +97,11 @@ class PostController extends Controller
     /**
      * PUT/PATCH /api/posts/{post}
      *
-     * @param  PostRequest  $request
+     * @param  StorePostRequestt  $request
      * @param  Post         $post
      * @return PostResource
      */
-    public function update(PostRequest $request, Post $post): PostResource
+    public function update(StorePostRequest $request, Post $post): PostResource
     {
         $data = $request->validated();
 
