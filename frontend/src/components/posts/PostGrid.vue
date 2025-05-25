@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import type { Category, Post, PostsResponse, PostFilters } from '@/types/post'
 import { fetchCategories } from '@/services/category'
 import { fetchPosts } from '@/services/post'
+import { fetchUserPosts } from '@/services/profile'
 import PostCard from './PostCard.vue'
 import FilterBar from './FilterBar.vue'
 
@@ -11,6 +12,7 @@ const postList = ref<Post[]>([])
 const paginationMeta = ref<PostsResponse['data']['meta']>({} as any)
 const loading = ref(true)
 const error = ref<string | null>(null)
+const props = defineProps<{ userId?: number }>()
 
 const filters = ref<PostFilters>({
     search: '',
@@ -22,6 +24,13 @@ const filters = ref<PostFilters>({
 const totalPages = computed(() => {
     return paginationMeta.value.last_page || 1
 })
+
+const heading = computed(
+    () =>
+        props.userId && postList.value.length
+            ? `Posts by ${postList.value[0].user.name}`
+            : 'All Posts'
+)
 
 onMounted(async () => {
     loading.value = true
@@ -38,16 +47,20 @@ onMounted(async () => {
 async function loadPosts(page: number) {
     loading.value = true
     error.value = null
+    filters.value.page = page
+
     try {
-        filters.value.page = page
-        const response = await fetchPosts(filters.value)
+        const response: PostsResponse = props.userId
+            ? await fetchUserPosts(props.userId, filters.value)
+            : await fetchPosts(filters.value)
+
         postList.value = response.data.posts
         paginationMeta.value = response.data.meta
     } catch (e: any) {
         error.value = e.message || 'Error loading posts'
-    } finally {
-        loading.value = false
-    }
+  } finally {
+    loading.value = false
+  }
 }
 
 function onFiltersChange(updated: PostFilters) {
@@ -63,9 +76,9 @@ function goToPage(page: number) {
 
 <template>
     <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl font-bold mb-6">All Posts</h1>
+        <h1 class="text-2xl font-bold mb-6">{{ heading }}</h1>
 
-        <FilterBar :categories="categories" :filters="filters" @update:filters="onFiltersChange" />
+        <FilterBar v-if="!props.userId" :categories="categories" :filters="filters" @update:filters="onFiltersChange" />
 
         <div v-if="loading" class="text-center py-8">Loading…</div>
         <div v-else-if="error" class="text-center text-red-600 py-8">
@@ -73,7 +86,7 @@ function goToPage(page: number) {
         </div>
 
         <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <PostCard v-for="p in postList" :key="p.id" :post="p" />
+            <PostCard v-for="post in postList" :key="post.id" :post="post" />
         </div>
 
         <nav v-if="paginationMeta.last_page > 1" class="mt-8 flex justify-center items-center space-x-2">

@@ -5,6 +5,7 @@ import Register from '@/views/auth/Register.vue'
 import Post from '@/views/post/Post.vue'
 import PostCard from '@/components/posts/PostCard.vue'
 import { useAuthStore } from '@/stores/auth'
+import Profile from '@/views/user/Profile.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -42,6 +43,13 @@ export const routes: RouteRecordRaw[] = [
     meta: { auth: true },
   },
   {
+    path: '/profile/:id',
+    name: 'profile',
+    component: Profile,
+    props: route => ({ id: Number(route.params.id) }),
+    meta: { auth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: () => {
       const auth = useAuthStore()
@@ -75,4 +83,3 @@ router.beforeEach(async (to, _, next) => {
 export default router
 
 // { path: '/posts/create',name: 'posts.create', component: PostForm,   meta: { auth: true,   navLabel: 'New Post' } },
-// { path: '/profile',     name: 'profile',      component: Profile,    meta: { auth: true,   navLabel: 'Profile' } },

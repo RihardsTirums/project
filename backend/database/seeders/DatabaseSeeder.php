@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         User::all()->each(function($user) {
-            Post::factory(rand(1,20))
+            Post::factory(rand(1,50))
                 ->for($user, 'user')
                 ->create()
                 ->each(function($post) use ($user) {

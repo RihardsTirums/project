@@ -4,6 +4,7 @@ import CategoryBadge from './CategoryBadge.vue';
 import { fetchPost } from '@/services/post';
 import type { Post, PostDetail } from '@/types/post';
 import CommentsSection from './CommentsSection.vue';
+import AuthorLink from '@/components/posts/AuthorLink.vue'
 
 const props = withDefaults(defineProps<{
     post?: Post;
@@ -38,8 +39,8 @@ const post = computed(() => local.value as Post);
             {{ post.title }}
         </h1>
 
-        <div class="mt-1 flex items-center text-sm text-gray-500 space-x-2">
-            <span>By <i>{{ post.user.name }}</i></span>
+        <div class="flex items-center text-sm text-gray-500 space-x-2">
+            <span>By <i><AuthorLink :user="post.user" /></i></span>
             <template v-if="expanded">
                 <span>|</span>
                 <time :datetime="post.created_at">{{ post.created_at }}</time>
