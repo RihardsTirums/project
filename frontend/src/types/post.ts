@@ -57,3 +57,7 @@ export interface PostPayload {
     content: string
     categories: number[]
 }
+
+export interface CommentPayload {
+    content: string
+}

@@ -40,7 +40,7 @@ const post = computed(() => local.value as Post);
             <h1 :class="expanded ? 'text-3xl' : 'text-lg'" class="font-semibold text-gray-900 truncate">
                 {{ post.title }}
             </h1>
-            <OwnerActions :post="post" />
+            <OwnerActions :ownerId="post.user.id" :postId="post.id" showEdit showDelete />
         </div>
 
         <div class="flex items-center text-sm text-gray-500 space-x-2">
@@ -67,6 +67,7 @@ const post = computed(() => local.value as Post);
             <span>Published {{ post.created_at }}</span>
         </footer>
 
-        <CommentsSection v-if="expanded && 'comments' in post" :comments="(post as PostDetail).comments" />
+        <CommentsSection v-if="expanded && 'comments' in post" :postId="post.id"
+            :comments="(post as PostDetail).comments" />
     </component>
 </template>

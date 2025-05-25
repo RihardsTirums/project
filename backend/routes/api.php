@@ -35,6 +35,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::get('categories', fn() => CategoryResource::collection(Category::all()));
     Route::apiResource('posts', PostController::class);
-    Route::apiResource('posts.comments', CommentController::class)->only(['store', 'destroy']);
+    Route::apiResource('posts.comments', CommentController::class)->only(['store', 'destroy'])->shallow();
     Route::get('profile/{user}', ProfilePostController::class);
 });
