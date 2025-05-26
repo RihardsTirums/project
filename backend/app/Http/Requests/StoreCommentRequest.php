@@ -23,7 +23,7 @@ class StoreCommentRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'content' => strip_tags($this->input('content')),
+            'content' => strip_tags((string) $this->input('content')),
         ]);
     }
 

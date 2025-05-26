@@ -23,8 +23,8 @@ class StorePostRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'title'   => strip_tags($this->input('title')),
-            'content' => strip_tags($this->input('content')),
+            'title'   => strip_tags((string) $this->input('title')),
+            'content' => strip_tags((string) $this->input('content')),
         ]);
     }
 
