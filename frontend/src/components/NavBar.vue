@@ -63,7 +63,6 @@ const open = ref(false)
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50">
           Sign Up
         </router-link>
-
         <router-link v-if="auth.user" to="/posts"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50">
           Posts
