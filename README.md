@@ -53,7 +53,7 @@ Features include:
 ### Backend setup
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/RihardsTirums/social-publishing-platform.git
+   git clone https://github.com/RihardsTirums/project.git
    ```
 2. **Set up the backend**:
    - Navigate into the backend folder:
