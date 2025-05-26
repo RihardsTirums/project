@@ -33,7 +33,7 @@ async function submitComment() {
         newContent.value = ''
     } catch (err: any) {
         if (err.response?.status === 422) {
-            errors.content = err.response.data.errors.content || []
+            errors.content = err.response.data.errors.content
         } else {
             console.error(err)
         }

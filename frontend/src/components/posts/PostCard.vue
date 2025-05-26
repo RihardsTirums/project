@@ -60,7 +60,10 @@ const post = computed(() => local.value as Post);
         <p v-if="!expanded" class="mt-3 text-gray-700">
             {{ post.content.slice(0, 200) }}…
         </p>
-        <div v-else class="prose mt-6" v-html="post.content" />
+
+        <div v-else class="prose mt-6">
+            {{ post.content }}
+        </div>
 
         <footer v-if="!expanded" class="mt-3 text-xs text-gray-400 italic flex justify-between">
             <span>{{ post.comments_count }} comments</span>

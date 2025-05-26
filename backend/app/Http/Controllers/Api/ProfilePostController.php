@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
@@ -18,7 +20,7 @@ class ProfilePostController extends Controller
      */
     public function __invoke(Request $request, User $user): PostCollection
     {
-        $perPage = (int) $request->query('per_page', 20);
+        $perPage = (int) $request->query('per_page', 9);
 
         $posts = $user->posts()
             ->with(['categories', 'user'])

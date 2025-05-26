@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -15,6 +17,18 @@ class StorePostRequest extends FormRequest
     }
 
     /**
+     * Strip out any HTML tags so no markup (including <script>, <img>, etc.)
+     * ever makes it into the database.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'title'   => strip_tags($this->input('title')),
+            'content' => strip_tags($this->input('content')),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -23,9 +37,9 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title'       => ['required', 'string', 'min:10', 'max:255'],
-            'content'     => ['required', 'string', 'min:400'],
-            'categories'  => ['required', 'array'],
-            'categories.*'=> ['integer', 'exists:categories,id'],
+            'content'     => ['required', 'string', 'min:400', 'max:2000'],
+            'categories'  => ['required', 'array', 'min:1'],
+            'categories.*' => ['integer', 'exists:categories,id'],
         ];
     }
 }

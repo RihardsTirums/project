@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\Post;
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
     public function index(Request $request): PostCollection
     {
-        $perPage = (int) $request->query('per_page', 20);
+        $perPage = (int) $request->query('per_page', 9);
 
         $posts = Post::with(['user', 'categories'])
             ->withCount('comments')
@@ -88,8 +90,7 @@ class PostController extends Controller
             'user',
             'categories',
             'comments.user',
-        ])
-        ->loadCount('comments');
+        ])->loadCount('comments');
 
         return new PostResource($post);
     }

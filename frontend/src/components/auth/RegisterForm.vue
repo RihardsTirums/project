@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import type { RegisterData, ApiValidationErrors } from '@/types/auth'
+
+const auth = useAuthStore()
+const form = ref<RegisterData>({ name: '', email: '', password: '', password_confirmation: '' })
+const errors = ref<Partial<ApiValidationErrors>>({})
+const submitting = ref(false)
+
+async function onSubmit() {
+    submitting.value = true
+    errors.value = {}
+    try {
+        await auth.register(form.value)
+    } catch (err: any) {
+        if (err.response?.status === 422) {
+            errors.value = err.response.data.errors
+        } else {
+            console.error(err)
+        }
+    } finally {
+        submitting.value = false
+    }
+}
+</script>
+
 <template>
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -61,30 +88,3 @@
         </form>
     </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import type { RegisterData, ApiValidationErrors } from '@/types/auth'
-
-const auth = useAuthStore()
-const form = ref<RegisterData>({ name: '', email: '', password: '', password_confirmation: '' })
-const errors = ref<Partial<ApiValidationErrors>>({})
-const submitting = ref(false)
-
-async function onSubmit() {
-  submitting.value = true
-  errors.value = {}
-  try {
-    await auth.register(form.value)
-  } catch (err: any) {
-    if (err.response?.status === 422) {
-      errors.value = err.response.data.errors
-    } else {
-      console.error(err)
-    }
-  } finally {
-    submitting.value = false
-  }
-}
-</script>
