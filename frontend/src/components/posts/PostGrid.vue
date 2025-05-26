@@ -85,7 +85,7 @@ function goToPage(page: number) {
             {{ error }}
         </div>
 
-        <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <PostCard v-for="post in postList" :key="post.id" :post="post" />
         </div>
 
