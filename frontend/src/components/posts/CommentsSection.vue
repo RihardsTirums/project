@@ -4,6 +4,7 @@ import type { Comment } from '@/types/post'
 import OwnerActions from '@/components/posts/OwnerActions.vue'
 import { createComment, deleteComment } from '@/services/comment'
 import AuthorLink from '@/components/posts/AuthorLink.vue'
+import confetti from 'canvas-confetti'
 
 const props = defineProps<{
     comments: Comment[]
@@ -23,6 +24,11 @@ async function submitComment() {
         const comment = await createComment(props.postId, {
             content: newContent.value
         })
+        confetti({
+            particleCount: 550,
+            spread: 100,
+            origin: { y: 0.6 }
+        })
         commentsList.value.unshift(comment)
         newContent.value = ''
     } catch (err: any) {
@@ -39,7 +45,7 @@ async function submitComment() {
 async function removeComment(commentId: number) {
     try {
         await deleteComment(commentId)
-        commentsList.value = commentsList.value.filter(c => c.id !== commentId)
+        commentsList.value = commentsList.value.filter(comment => comment.id !== commentId)
     } catch {
         alert('Could not delete comment.')
     }

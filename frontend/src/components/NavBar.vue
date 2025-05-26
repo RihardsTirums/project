@@ -40,6 +40,11 @@ const open = ref(false)
             New Post
           </router-link>
 
+          <router-link v-if="auth.user" :to="{ name: 'profile', params: { id: auth.user.id } }"
+            class="text-gray-600 hover:text-gray-900">
+            My Profile
+          </router-link>
+
           <div v-if="auth.user" class="flex items-center space-x-2 border-l border-gray-200 pl-4">
             <span class="text-gray-700">Hey, {{ auth.user.name }}</span>
             <button @click="auth.logout()" class="px-2 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600">
@@ -66,6 +71,11 @@ const open = ref(false)
         <router-link v-if="auth.user" :to="{ name: 'posts.form' }"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50">
           New Post
+        </router-link>
+
+        <router-link v-if="auth.user" :to="{ name: 'profile', params: { id: auth.user.id } }"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50">
+          My Profile
         </router-link>
 
         <div v-if="auth.user" class="border-t border-gray-200 pt-4 px-3">

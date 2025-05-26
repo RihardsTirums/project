@@ -58,9 +58,9 @@ async function loadPosts(page: number) {
         paginationMeta.value = response.data.meta
     } catch (e: any) {
         error.value = e.message || 'Error loading posts'
-  } finally {
-    loading.value = false
-  }
+    } finally {
+        loading.value = false
+    }
 }
 
 function onFiltersChange(updated: PostFilters) {
@@ -89,33 +89,43 @@ function goToPage(page: number) {
             <PostCard v-for="post in postList" :key="post.id" :post="post" />
         </div>
 
-        <nav v-if="paginationMeta.last_page > 1" class="mt-8 flex justify-center items-center space-x-2">
-            <button @click="goToPage(filters.page! - 1)" :disabled="filters.page === 1"
-                class="px-3 py-1 border rounded-l-md" :class="filters.page === 1
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'">
-                ‹ Prev
-            </button>
-
-            <ul class="inline-flex -space-x-px">
-                <li v-for="n in totalPages" :key="n">
-                    <button @click="goToPage(n)" :class="[
-                        'px-4 py-1 border',
-                        n === filters.page
-                            ? 'bg-indigo-600 text-white border-indigo-600'
-                            : 'bg-white text-gray-700 hover:bg-gray-100'
-                    ]">
-                        {{ n }}
+        <nav v-if="paginationMeta.last_page > 1" class="mt-8">
+            <div class="flex justify-center overflow-x-auto">
+                <div class="inline-flex items-center space-x-2">
+                    <button @click="goToPage(filters.page! - 1)" :disabled="filters.page === 1"
+                        class="px-3 py-1 border rounded-l-md" :class="filters.page === 1
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-white text-gray-700 hover:bg-gray-100'">
+                        ‹ Prev
                     </button>
-                </li>
-            </ul>
 
-            <button @click="goToPage(filters.page! + 1)" :disabled="filters.page === paginationMeta.last_page"
-                class="px-3 py-1 border rounded-r-md" :class="filters.page === paginationMeta.last_page
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'">
-                Next ›
-            </button>
+                    <ul class="inline-flex -space-x-px whitespace-nowrap">
+                        <li v-for="n in totalPages" :key="n" class="hidden sm:inline-block">
+                            <button @click="goToPage(n)" :class="[
+                                'px-4 py-1 border',
+                                n === filters.page
+                                    ? 'bg-indigo-600 text-white border-indigo-600'
+                                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                            ]">
+                                {{ n }}
+                            </button>
+                        </li>
+
+                        <li class="sm:hidden">
+                            <span class="px-4 py-1 border bg-white text-gray-700">
+                                {{ filters.page }} of {{ totalPages }}
+                            </span>
+                        </li>
+                    </ul>
+
+                    <button @click="goToPage(filters.page! + 1)" :disabled="filters.page === paginationMeta.last_page"
+                        class="px-3 py-1 border rounded-r-md" :class="filters.page === paginationMeta.last_page
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-white text-gray-700 hover:bg-gray-100'">
+                        Next ›
+                    </button>
+                </div>
+            </div>
         </nav>
     </div>
 </template>
