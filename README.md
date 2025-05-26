@@ -7,6 +7,7 @@
 4. [Prerequisites](#prerequisites)
 5. [Installation](#installation)
 6. [Usage](#usage)
+7. [Postman Collection](#postman-collection)
 7. [API Endpoints](#api-endpoints)
 8. [Security & Access Control](#security--access-control)
 
@@ -124,18 +125,16 @@ Features include:
      ```
 
 ## Usage
-
-### Postman Collection
-
-[Click here to open the Postman collection](https://postman.co/workspace/My-Workspace~1c5a3a38-cfc9-4ea1-8b63-40c511a4d952/collection/30400997-6ab0845c-4133-44a3-9b3b-aff0b15a5449?action=share&creator=30400997&active-environment=30400997-f7a3cfe6-47f9-47b4-8271-bce36a0f1d99)
-
-
 1. Open `http://localhost:5173` in your browser.
 2. Register a new user or log in with seeded credentials.
 3. Create, edit, or delete posts.
 4. Add comments to posts.
 5. Filter and search posts on the main feed.
 6. View user profiles.
+
+## Postman Collection
+
+[Click here to open the Postman collection](https://postman.co/workspace/My-Workspace~1c5a3a38-cfc9-4ea1-8b63-40c511a4d952/collection/30400997-6ab0845c-4133-44a3-9b3b-aff0b15a5449?action=share&creator=30400997&active-environment=30400997-f7a3cfe6-47f9-47b4-8271-bce36a0f1d99)
 
 ## API Endpoints
 
